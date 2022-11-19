@@ -1,34 +1,33 @@
-package net.jcip.examples;
+package net.jcip.examples.ch02;
 
 import java.math.BigInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import net.jcip.annotations.ThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
- CountingFactorizer
+ UnsafeCountingFactorizer
 
- Servlet that counts requests using AtomicLong
+ Servlet that counts requests without the necessary synchronization
 
  @author Brian Goetz and Tim Peierls */
-@ThreadSafe
-public class CountingFactorizer extends GenericServlet implements Servlet {
+@NotThreadSafe
+public class UnsafeCountingFactorizer extends GenericServlet implements Servlet {
 
-    private final AtomicLong count = new AtomicLong(0);
+    private long count = 0;
 
     public long getCount() {
-        return count.get();
+        return count;
     }
 
     public void service(ServletRequest req, ServletResponse resp) {
         BigInteger i = extractFromRequest(req);
         BigInteger[] factors = factor(i);
-        count.incrementAndGet();
+        ++count;
         encodeIntoResponse(resp, factors);
     }
 
@@ -36,10 +35,11 @@ public class CountingFactorizer extends GenericServlet implements Servlet {
     }
 
     BigInteger extractFromRequest(ServletRequest req) {
-        return null;
+        return new BigInteger("7");
     }
 
     BigInteger[] factor(BigInteger i) {
-        return null;
+        // Doesn't really factor
+        return new BigInteger[]{i};
     }
 }

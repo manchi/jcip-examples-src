@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch02;
 
 import java.math.BigInteger;
 
@@ -7,31 +7,24 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import net.jcip.annotations.NotThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- UnsafeCountingFactorizer
+ StatelessFactorizer
 
- Servlet that counts requests without the necessary synchronization
+ A stateless servlet
 
  @author Brian Goetz and Tim Peierls */
-@NotThreadSafe
-public class UnsafeCountingFactorizer extends GenericServlet implements Servlet {
-
-    private long count = 0;
-
-    public long getCount() {
-        return count;
-    }
+@ThreadSafe
+public class StatelessFactorizer extends GenericServlet implements Servlet {
 
     public void service(ServletRequest req, ServletResponse resp) {
         BigInteger i = extractFromRequest(req);
         BigInteger[] factors = factor(i);
-        ++count;
         encodeIntoResponse(resp, factors);
     }
 
-    void encodeIntoResponse(ServletResponse res, BigInteger[] factors) {
+    void encodeIntoResponse(ServletResponse resp, BigInteger[] factors) {
     }
 
     BigInteger extractFromRequest(ServletRequest req) {
