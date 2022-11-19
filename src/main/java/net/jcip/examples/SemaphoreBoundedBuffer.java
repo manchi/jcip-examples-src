@@ -1,25 +1,29 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Semaphore;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * BoundedBuffer
- * <p/>
- * Bounded buffer using \Semaphore
- *
- * @author Brian Goetz and Tim Peierls
- */
+ BoundedBuffer
+ <p/>
+ Bounded buffer using \Semaphore
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
-public class SemaphoreBoundedBuffer <E> {
+public class SemaphoreBoundedBuffer<E> {
+
     private final Semaphore availableItems, availableSpaces;
-    @GuardedBy("this") private final E[] items;
-    @GuardedBy("this") private int putPosition = 0, takePosition = 0;
+    @GuardedBy("this")
+    private final E[] items;
+    @GuardedBy("this")
+    private int putPosition = 0, takePosition = 0;
 
     public SemaphoreBoundedBuffer(int capacity) {
-        if (capacity <= 0)
+        if (capacity <= 0) {
             throw new IllegalArgumentException();
+        }
         availableItems = new Semaphore(0);
         availableSpaces = new Semaphore(capacity);
         items = (E[]) new Object[capacity];

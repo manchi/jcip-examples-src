@@ -1,15 +1,15 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
 
 /**
- * TaskRunnable
- * <p/>
- * Restoring the interrupted status so as not to swallow the interrupt
- *
- * @author Brian Goetz and Tim Peierls
- */
+ TaskRunnable
+ <p/>
+ Restoring the interrupted status so as not to swallow the interrupt
+
+ @author Brian Goetz and Tim Peierls */
 public class TaskRunnable implements Runnable {
+
     BlockingQueue<Task> queue;
 
     public void run() {
@@ -26,5 +26,6 @@ public class TaskRunnable implements Runnable {
     }
 
     interface Task {
+
     }
 }

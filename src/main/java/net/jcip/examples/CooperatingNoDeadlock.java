@@ -1,20 +1,24 @@
 package net.jcip.examples;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * CooperatingNoDeadlock
- * <p/>
- * Using open calls to avoiding deadlock between cooperating objects
- *
- * @author Brian Goetz and Tim Peierls
- */
+ CooperatingNoDeadlock
+ <p/>
+ Using open calls to avoiding deadlock between cooperating objects
+
+ @author Brian Goetz and Tim Peierls */
 class CooperatingNoDeadlock {
+
     @ThreadSafe
     class Taxi {
-        @GuardedBy("this") private Point location, destination;
+
+        @GuardedBy("this")
+        private Point location, destination;
         private final Dispatcher dispatcher;
 
         public Taxi(Dispatcher dispatcher) {
@@ -31,8 +35,9 @@ class CooperatingNoDeadlock {
                 this.location = location;
                 reachedDestination = location.equals(destination);
             }
-            if (reachedDestination)
+            if (reachedDestination) {
                 dispatcher.notifyAvailable(this);
+            }
         }
 
         public synchronized Point getDestination() {
@@ -46,8 +51,11 @@ class CooperatingNoDeadlock {
 
     @ThreadSafe
     class Dispatcher {
-        @GuardedBy("this") private final Set<Taxi> taxis;
-        @GuardedBy("this") private final Set<Taxi> availableTaxis;
+
+        @GuardedBy("this")
+        private final Set<Taxi> taxis;
+        @GuardedBy("this")
+        private final Set<Taxi> availableTaxis;
 
         public Dispatcher() {
             taxis = new HashSet<Taxi>();
@@ -64,13 +72,15 @@ class CooperatingNoDeadlock {
                 copy = new HashSet<Taxi>(taxis);
             }
             Image image = new Image();
-            for (Taxi t : copy)
+            for (Taxi t : copy) {
                 image.drawMarker(t.getLocation());
+            }
             return image;
         }
     }
 
     class Image {
+
         public void drawMarker(Point p) {
         }
     }

@@ -1,19 +1,20 @@
 package net.jcip.examples;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Collections;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * PublishingVehicleTracker
- * <p/>
- * Vehicle tracker that safely publishes underlying state
- *
- * @author Brian Goetz and Tim Peierls
- */
+ PublishingVehicleTracker
+ <p/>
+ Vehicle tracker that safely publishes underlying state
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class PublishingVehicleTracker {
+
     private final Map<String, SafePoint> locations;
     private final Map<String, SafePoint> unmodifiableMap;
 
@@ -31,8 +32,9 @@ public class PublishingVehicleTracker {
     }
 
     public void setLocation(String id, int x, int y) {
-        if (!locations.containsKey(id))
+        if (!locations.containsKey(id)) {
             throw new IllegalArgumentException("invalid vehicle name: " + id);
+        }
         locations.get(id).set(x, y);
     }
 }

@@ -3,16 +3,19 @@ package net.jcip.examples;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import javax.swing.*;
 
 /**
- * ListenerExamples
- *
- * @author Brian Goetz and Tim Peierls
- */
+ ListenerExamples
+
+ @author Brian Goetz and Tim Peierls */
 public class ListenerExamples {
+
     private static ExecutorService exec = Executors.newCachedThreadPool();
 
     private final JButton colorButton = new JButton("Change color");
@@ -105,8 +108,9 @@ public class ListenerExamples {
 
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                if (runningTask != null)
+                if (runningTask != null) {
                     runningTask.cancel(true);
+                }
             }
         });
     }
@@ -116,17 +120,21 @@ public class ListenerExamples {
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 class CancelListener implements ActionListener {
+
                     BackgroundTask<?> task;
+
                     public void actionPerformed(ActionEvent event) {
-                        if (task != null)
+                        if (task != null) {
                             task.cancel(true);
+                        }
                     }
                 }
                 final CancelListener listener = new CancelListener();
                 listener.task = new BackgroundTask<Void>() {
                     public Void compute() {
-                        while (moreWork() && !isCancelled())
+                        while (moreWork() && !isCancelled()) {
                             doSomeWork();
+                        }
                         return null;
                     }
 

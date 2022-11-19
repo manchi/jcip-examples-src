@@ -1,16 +1,17 @@
 package net.jcip.examples;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.List;
+import java.util.concurrent.AbstractExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
- * GuiExecutor
- * <p/>
- * Executor built atop SwingUtilities
- *
- * @author Brian Goetz and Tim Peierls
- */
+ GuiExecutor
+ <p/>
+ Executor built atop SwingUtilities
+
+ @author Brian Goetz and Tim Peierls */
 public class GuiExecutor extends AbstractExecutorService {
+
     // Singletons have a private constructor and a public factory
     private static final GuiExecutor instance = new GuiExecutor();
 
@@ -22,10 +23,11 @@ public class GuiExecutor extends AbstractExecutorService {
     }
 
     public void execute(Runnable r) {
-        if (SwingUtilities.isEventDispatchThread())
+        if (SwingUtilities.isEventDispatchThread()) {
             r.run();
-        else
+        } else {
             SwingUtilities.invokeLater(r);
+        }
     }
 
     public void shutdown() {
@@ -37,7 +39,7 @@ public class GuiExecutor extends AbstractExecutorService {
     }
 
     public boolean awaitTermination(long timeout, TimeUnit unit)
-            throws InterruptedException {
+        throws InterruptedException {
         throw new UnsupportedOperationException();
     }
 

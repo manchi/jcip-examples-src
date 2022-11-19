@@ -1,17 +1,23 @@
 package net.jcip.examples;
 
-import java.util.*;
-import java.util.concurrent.*;
 import static net.jcip.examples.LaunderThrowable.launderThrowable;
 
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletionService;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+
 /**
- * Renderer
- * <p/>
- * Using CompletionService to render page elements as they become available
- *
- * @author Brian Goetz and Tim Peierls
- */
+ Renderer
+ <p/>
+ Using CompletionService to render page elements as they become available
+
+ @author Brian Goetz and Tim Peierls */
 public abstract class Renderer {
+
     private final ExecutorService executor;
 
     Renderer(ExecutorService executor) {
@@ -21,13 +27,14 @@ public abstract class Renderer {
     void renderPage(CharSequence source) {
         final List<ImageInfo> info = scanForImageInfo(source);
         CompletionService<ImageData> completionService =
-                new ExecutorCompletionService<ImageData>(executor);
-        for (final ImageInfo imageInfo : info)
+            new ExecutorCompletionService<ImageData>(executor);
+        for (final ImageInfo imageInfo : info) {
             completionService.submit(new Callable<ImageData>() {
                 public ImageData call() {
                     return imageInfo.downloadImage();
                 }
             });
+        }
 
         renderText(source);
 
@@ -45,9 +52,11 @@ public abstract class Renderer {
     }
 
     interface ImageData {
+
     }
 
     interface ImageInfo {
+
         ImageData downloadImage();
     }
 

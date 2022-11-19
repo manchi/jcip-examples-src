@@ -1,16 +1,16 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.*;
-import java.util.logging.*;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Logger;
 
 /**
- * TimingThreadPool
- * <p/>
- * Thread pool extended with logging and timing
- *
- * @author Brian Goetz and Tim Peierls
- */
+ TimingThreadPool
+ <p/>
+ Thread pool extended with logging and timing
+
+ @author Brian Goetz and Tim Peierls */
 public class TimingThreadPool extends ThreadPoolExecutor {
 
     public TimingThreadPool() {
@@ -35,7 +35,7 @@ public class TimingThreadPool extends ThreadPoolExecutor {
             numTasks.incrementAndGet();
             totalTime.addAndGet(taskTime);
             log.fine(String.format("Thread %s: end %s, time=%dns",
-                    t, r, taskTime));
+                                   t, r, taskTime));
         } finally {
             super.afterExecute(r, t);
         }
@@ -44,7 +44,7 @@ public class TimingThreadPool extends ThreadPoolExecutor {
     protected void terminated() {
         try {
             log.info(String.format("Terminated: avg time=%dns",
-                    totalTime.get() / numTasks.get()));
+                                   totalTime.get() / numTasks.get()));
         } finally {
             super.terminated();
         }

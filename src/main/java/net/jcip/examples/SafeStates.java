@@ -1,18 +1,19 @@
 package net.jcip.examples;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * SafeStates
- * <p/>
- * Initialization safety for immutable objects
- *
- * @author Brian Goetz and Tim Peierls
- */
+ SafeStates
+ <p/>
+ Initialization safety for immutable objects
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class SafeStates {
+
     private final Map<String, String> states;
 
     public SafeStates() {

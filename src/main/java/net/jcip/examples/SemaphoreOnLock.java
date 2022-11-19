@@ -1,23 +1,27 @@
 package net.jcip.examples;
 
-import java.util.concurrent.locks.*;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * SemaphoreOnLock
- * <p/>
- * Counting semaphore implemented using Lock
- * (Not really how java.util.concurrent.Semaphore is implemented)
- *
- * @author Brian Goetz and Tim Peierls
- */
+ SemaphoreOnLock
+ <p/>
+ Counting semaphore implemented using Lock
+ (Not really how java.util.concurrent.Semaphore is implemented)
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class SemaphoreOnLock {
+
     private final Lock lock = new ReentrantLock();
     // CONDITION PREDICATE: permitsAvailable (permits > 0)
     private final Condition permitsAvailable = lock.newCondition();
-    @GuardedBy("lock") private int permits;
+    @GuardedBy("lock")
+    private int permits;
 
     SemaphoreOnLock(int initialPermits) {
         lock.lock();
@@ -32,8 +36,9 @@ public class SemaphoreOnLock {
     public void acquire() throws InterruptedException {
         lock.lock();
         try {
-            while (permits <= 0)
+            while (permits <= 0) {
                 permitsAvailable.await();
+            }
             --permits;
         } finally {
             lock.unlock();

@@ -1,18 +1,18 @@
 package net.jcip.examples;
 
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * AtomicPseudoRandom
- * <p/>
- * Random number generator using AtomicInteger
- *
- * @author Brian Goetz and Tim Peierls
- */
+ AtomicPseudoRandom
+ <p/>
+ Random number generator using AtomicInteger
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class AtomicPseudoRandom extends PseudoRandom {
+
     private AtomicInteger seed;
 
     AtomicPseudoRandom(int seed) {

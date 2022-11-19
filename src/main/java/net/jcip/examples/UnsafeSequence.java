@@ -1,19 +1,19 @@
 package net.jcip.examples;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
- * UnsafeSequence
- *
- * @author Brian Goetz and Tim Peierls
- */
+ UnsafeSequence
+
+ @author Brian Goetz and Tim Peierls */
 
 @NotThreadSafe
 public class UnsafeSequence {
+
     private int value;
 
     /**
-     * Returns a unique value.
+     Returns a unique value.
      */
     public int getNext() {
         return value++;

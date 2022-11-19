@@ -1,16 +1,22 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeoutException;
+
 /**
- * RenderWithTimeBudget
- *
- * Fetching an advertisement with a time budget
- *
- * @author Brian Goetz and Tim Peierls
- */
+ RenderWithTimeBudget
+
+ Fetching an advertisement with a time budget
+
+ @author Brian Goetz and Tim Peierls */
 public class RenderWithTimeBudget {
+
     private static final Ad DEFAULT_AD = new Ad();
     private static final long TIME_BUDGET = 1000;
     private static final ExecutorService exec = Executors.newCachedThreadPool();
@@ -35,21 +41,26 @@ public class RenderWithTimeBudget {
         return page;
     }
 
-    Page renderPageBody() { return new Page(); }
+    Page renderPageBody() {
+        return new Page();
+    }
 
 
     static class Ad {
+
     }
 
     static class Page {
-        public void setAd(Ad ad) { }
+
+        public void setAd(Ad ad) {
+        }
     }
 
     static class FetchAdTask implements Callable<Ad> {
+
         public Ad call() {
             return new Ad();
         }
     }
 
 }
-

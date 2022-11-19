@@ -1,15 +1,15 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
+import java.util.concurrent.CyclicBarrier;
 
 /**
- * TimedPutTakeTest
- * <p/>
- * Testing with a barrier-based timer
- *
- * @author Brian Goetz and Tim Peierls
- */
+ TimedPutTakeTest
+ <p/>
+ Testing with a barrier-based timer
+
+ @author Brian Goetz and Tim Peierls */
 public class TimedPutTakeTest extends PutTakeTest {
+
     private BarrierTimer timer = new BarrierTimer();
 
     public TimedPutTakeTest(int cap, int pairs, int trials) {

@@ -1,17 +1,18 @@
 package net.jcip.examples;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * ResourceFactory
- * <p/>
- * Lazy initialization holder class idiom
- *
- * @author Brian Goetz and Tim Peierls
- */
+ ResourceFactory
+ <p/>
+ Lazy initialization holder class idiom
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class ResourceFactory {
+
     private static class ResourceHolder {
+
         public static Resource resource = new Resource();
     }
 
@@ -20,5 +21,6 @@ public class ResourceFactory {
     }
 
     static class Resource {
+
     }
 }

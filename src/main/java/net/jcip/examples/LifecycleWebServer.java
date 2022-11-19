@@ -3,17 +3,20 @@ package net.jcip.examples;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.*;
-import java.util.logging.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * LifecycleWebServer
- * <p/>
- * Web server with shutdown support
- *
- * @author Brian Goetz and Tim Peierls
- */
+ LifecycleWebServer
+ <p/>
+ Web server with shutdown support
+
+ @author Brian Goetz and Tim Peierls */
 public class LifecycleWebServer {
+
     private final ExecutorService exec = Executors.newCachedThreadPool();
 
     public void start() throws IOException {
@@ -27,8 +30,9 @@ public class LifecycleWebServer {
                     }
                 });
             } catch (RejectedExecutionException e) {
-                if (!exec.isShutdown())
+                if (!exec.isShutdown()) {
                     log("task submission rejected", e);
+                }
             }
         }
     }
@@ -43,13 +47,15 @@ public class LifecycleWebServer {
 
     void handleRequest(Socket connection) {
         Request req = readRequest(connection);
-        if (isShutdownRequest(req))
+        if (isShutdownRequest(req)) {
             stop();
-        else
+        } else {
             dispatchRequest(req);
+        }
     }
 
     interface Request {
+
     }
 
     private Request readRequest(Socket s) {

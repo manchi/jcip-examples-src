@@ -1,20 +1,24 @@
 package net.jcip.examples;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * ServerStatusBeforeSplit
- * <p/>
- * Candidate for lock splitting
- *
- * @author Brian Goetz and Tim Peierls
- */
+ ServerStatusBeforeSplit
+ <p/>
+ Candidate for lock splitting
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class ServerStatusBeforeSplit {
-    @GuardedBy("this") public final Set<String> users;
-    @GuardedBy("this") public final Set<String> queries;
+
+    @GuardedBy("this")
+    public final Set<String> users;
+    @GuardedBy("this")
+    public final Set<String> queries;
 
     public ServerStatusBeforeSplit() {
         users = new HashSet<String>();

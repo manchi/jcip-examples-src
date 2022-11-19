@@ -1,16 +1,18 @@
 package net.jcip.examples;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.Semaphore;
 
 /**
- * BoundedHashSet
- * <p/>
- * Using Semaphore to bound a collection
- *
- * @author Brian Goetz and Tim Peierls
- */
-public class BoundedHashSet <T> {
+ BoundedHashSet
+ <p/>
+ Using Semaphore to bound a collection
+
+ @author Brian Goetz and Tim Peierls */
+public class BoundedHashSet<T> {
+
     private final Set<T> set;
     private final Semaphore sem;
 
@@ -26,15 +28,17 @@ public class BoundedHashSet <T> {
             wasAdded = set.add(o);
             return wasAdded;
         } finally {
-            if (!wasAdded)
+            if (!wasAdded) {
                 sem.release();
+            }
         }
     }
 
     public boolean remove(Object o) {
         boolean wasRemoved = set.remove(o);
-        if (wasRemoved)
+        if (wasRemoved) {
             sem.release();
+        }
         return wasRemoved;
     }
 }

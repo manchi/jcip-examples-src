@@ -1,23 +1,26 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 import static net.jcip.examples.LaunderThrowable.launderThrowable;
 
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 /**
- * TimedRun2
- * <p/>
- * Interrupting a task in a dedicated thread
- *
- * @author Brian Goetz and Tim Peierls
- */
+ TimedRun2
+ <p/>
+ Interrupting a task in a dedicated thread
+
+ @author Brian Goetz and Tim Peierls */
 public class TimedRun2 {
+
     private static final ScheduledExecutorService cancelExec = newScheduledThreadPool(1);
 
     public static void timedRun(final Runnable r,
                                 long timeout, TimeUnit unit)
-            throws InterruptedException {
+        throws InterruptedException {
         class RethrowableTask implements Runnable {
+
             private volatile Throwable t;
 
             public void run() {
@@ -29,8 +32,9 @@ public class TimedRun2 {
             }
 
             void rethrow() {
-                if (t != null)
+                if (t != null) {
                     throw launderThrowable(t);
+                }
             }
         }
 

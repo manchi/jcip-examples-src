@@ -1,20 +1,22 @@
 package net.jcip.examples;
 
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.atomic.AtomicReference;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.Immutable;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * CasNumberRange
- * <p/>
- * Preserving multivariable invariants using CAS
- *
- * @author Brian Goetz and Tim Peierls
- */
+ CasNumberRange
+ <p/>
+ Preserving multivariable invariants using CAS
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
-        public class CasNumberRange {
+public class CasNumberRange {
+
     @Immutable
-            private static class IntPair {
+    private static class IntPair {
+
         // INVARIANT: lower <= upper
         final int lower;
         final int upper;
@@ -26,7 +28,7 @@ import net.jcip.annotations.*;
     }
 
     private final AtomicReference<IntPair> values =
-            new AtomicReference<IntPair>(new IntPair(0, 0));
+        new AtomicReference<IntPair>(new IntPair(0, 0));
 
     public int getLower() {
         return values.get().lower;
@@ -39,22 +41,26 @@ import net.jcip.annotations.*;
     public void setLower(int i) {
         while (true) {
             IntPair oldv = values.get();
-            if (i > oldv.upper)
+            if (i > oldv.upper) {
                 throw new IllegalArgumentException("Can't set lower to " + i + " > upper");
+            }
             IntPair newv = new IntPair(i, oldv.upper);
-            if (values.compareAndSet(oldv, newv))
+            if (values.compareAndSet(oldv, newv)) {
                 return;
+            }
         }
     }
 
     public void setUpper(int i) {
         while (true) {
             IntPair oldv = values.get();
-            if (i < oldv.lower)
+            if (i < oldv.lower) {
                 throw new IllegalArgumentException("Can't set upper to " + i + " < lower");
+            }
             IntPair newv = new IntPair(oldv.lower, i);
-            if (values.compareAndSet(oldv, newv))
+            if (values.compareAndSet(oldv, newv)) {
                 return;
+            }
         }
     }
 }

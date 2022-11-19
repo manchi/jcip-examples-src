@@ -1,15 +1,15 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
 
 /**
- * NoncancelableTask
- * <p/>
- * Noncancelable task that restores interruption before exit
- *
- * @author Brian Goetz and Tim Peierls
- */
+ NoncancelableTask
+ <p/>
+ Noncancelable task that restores interruption before exit
+
+ @author Brian Goetz and Tim Peierls */
 public class NoncancelableTask {
+
     public Task getNextTask(BlockingQueue<Task> queue) {
         boolean interrupted = false;
         try {
@@ -22,11 +22,13 @@ public class NoncancelableTask {
                 }
             }
         } finally {
-            if (interrupted)
+            if (interrupted) {
                 Thread.currentThread().interrupt();
+            }
         }
     }
 
     interface Task {
+
     }
 }

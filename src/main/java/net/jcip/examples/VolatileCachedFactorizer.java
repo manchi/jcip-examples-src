@@ -1,19 +1,23 @@
 package net.jcip.examples;
 
 import java.math.BigInteger;
-import javax.servlet.*;
 
-import net.jcip.annotations.*;
+import javax.servlet.GenericServlet;
+import javax.servlet.Servlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * VolatileCachedFactorizer
- * <p/>
- * Caching the last result using a volatile reference to an immutable holder object
- *
- * @author Brian Goetz and Tim Peierls
- */
+ VolatileCachedFactorizer
+ <p/>
+ Caching the last result using a volatile reference to an immutable holder object
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class VolatileCachedFactorizer extends GenericServlet implements Servlet {
+
     private volatile OneValueCache cache = new OneValueCache(null, null);
 
     public void service(ServletRequest req, ServletResponse resp) {
@@ -38,4 +42,3 @@ public class VolatileCachedFactorizer extends GenericServlet implements Servlet 
         return new BigInteger[]{i};
     }
 }
-

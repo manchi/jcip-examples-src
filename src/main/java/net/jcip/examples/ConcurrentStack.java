@@ -1,18 +1,18 @@
 package net.jcip.examples;
 
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.atomic.AtomicReference;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * ConcurrentStack
- * <p/>
- * Nonblocking stack using Treiber's algorithm
- *
- * @author Brian Goetz and Tim Peierls
- */
+ ConcurrentStack
+ <p/>
+ Nonblocking stack using Treiber's algorithm
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
-        public class ConcurrentStack <E> {
+public class ConcurrentStack<E> {
+
     AtomicReference<Node<E>> top = new AtomicReference<Node<E>>();
 
     public void push(E item) {
@@ -29,14 +29,16 @@ import net.jcip.annotations.*;
         Node<E> newHead;
         do {
             oldHead = top.get();
-            if (oldHead == null)
+            if (oldHead == null) {
                 return null;
+            }
             newHead = oldHead.next;
         } while (!top.compareAndSet(oldHead, newHead));
         return oldHead.item;
     }
 
-    private static class Node <E> {
+    private static class Node<E> {
+
         public final E item;
         public Node<E> next;
 

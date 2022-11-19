@@ -1,16 +1,18 @@
 package net.jcip.examples;
 
-import java.util.*;
-import java.util.concurrent.locks.*;
+import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- * ReadWriteMap
- * <p/>
- * Wrapping a Map with a read-write lock
- *
- * @author Brian Goetz and Tim Peierls
- */
-public class ReadWriteMap <K,V> {
+ ReadWriteMap
+ <p/>
+ Wrapping a Map with a read-write lock
+
+ @author Brian Goetz and Tim Peierls */
+public class ReadWriteMap<K, V> {
+
     private final Map<K, V> map;
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private final Lock r = lock.readLock();

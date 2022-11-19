@@ -1,29 +1,33 @@
 package net.jcip.examples;
 
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.*;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * CheckForMail
- * <p/>
- * Using a private \Executor whose lifetime is bounded by a method call
- *
- * @author Brian Goetz and Tim Peierls
- */
+ CheckForMail
+ <p/>
+ Using a private \Executor whose lifetime is bounded by a method call
+
+ @author Brian Goetz and Tim Peierls */
 public class CheckForMail {
+
     public boolean checkMail(Set<String> hosts, long timeout, TimeUnit unit)
-            throws InterruptedException {
+        throws InterruptedException {
         ExecutorService exec = Executors.newCachedThreadPool();
         final AtomicBoolean hasNewMail = new AtomicBoolean(false);
         try {
-            for (final String host : hosts)
+            for (final String host : hosts) {
                 exec.execute(new Runnable() {
                     public void run() {
-                        if (checkMail(host))
+                        if (checkMail(host)) {
                             hasNewMail.set(true);
+                        }
                     }
                 });
+            }
         } finally {
             exec.shutdown();
             exec.awaitTermination(timeout, unit);

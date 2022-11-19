@@ -1,16 +1,16 @@
 package net.jcip.examples;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * SleepyBoundedBuffer
- * <p/>
- * Bounded buffer using crude blocking
- *
- * @author Brian Goetz and Tim Peierls
- */
+ SleepyBoundedBuffer
+ <p/>
+ Bounded buffer using crude blocking
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
-        public class SleepyBoundedBuffer <V> extends BaseBoundedBuffer<V> {
+public class SleepyBoundedBuffer<V> extends BaseBoundedBuffer<V> {
+
     int SLEEP_GRANULARITY = 60;
 
     public SleepyBoundedBuffer() {
@@ -36,8 +36,9 @@ import net.jcip.annotations.*;
     public V take() throws InterruptedException {
         while (true) {
             synchronized (this) {
-                if (!isEmpty())
+                if (!isEmpty()) {
                     return doTake();
+                }
             }
             Thread.sleep(SLEEP_GRANULARITY);
         }

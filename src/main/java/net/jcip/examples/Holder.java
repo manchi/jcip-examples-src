@@ -1,13 +1,13 @@
 package net.jcip.examples;
 
 /**
- * Holder
- * <p/>
- * Class at risk of failure if not properly published
- *
- * @author Brian Goetz and Tim Peierls
- */
+ Holder
+ <p/>
+ Class at risk of failure if not properly published
+
+ @author Brian Goetz and Tim Peierls */
 public class Holder {
+
     private int n;
 
     public Holder(int n) {
@@ -15,7 +15,8 @@ public class Holder {
     }
 
     public void assertSanity() {
-        if (n != n)
+        if (n != n) {
             throw new AssertionError("This statement is false.");
+        }
     }
 }

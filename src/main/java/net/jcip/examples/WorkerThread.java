@@ -1,16 +1,16 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
 
 /**
- * WorkerThread
- * <p/>
- * Serialized access to a task queue
- *
- * @author Brian Goetz and Tim Peierls
- */
+ WorkerThread
+ <p/>
+ Serialized access to a task queue
+
+ @author Brian Goetz and Tim Peierls */
 
 public class WorkerThread extends Thread {
+
     private final BlockingQueue<Runnable> queue;
 
     public WorkerThread(BlockingQueue<Runnable> queue) {

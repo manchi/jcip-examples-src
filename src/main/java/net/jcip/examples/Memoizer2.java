@@ -1,16 +1,16 @@
 package net.jcip.examples;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Memoizer2
- * <p/>
- * Replacing HashMap with ConcurrentHashMap
- *
- * @author Brian Goetz and Tim Peierls
- */
-public class Memoizer2 <A, V> implements Computable<A, V> {
+ Memoizer2
+ <p/>
+ Replacing HashMap with ConcurrentHashMap
+
+ @author Brian Goetz and Tim Peierls */
+public class Memoizer2<A, V> implements Computable<A, V> {
+
     private final Map<A, V> cache = new ConcurrentHashMap<A, V>();
     private final Computable<A, V> c;
 

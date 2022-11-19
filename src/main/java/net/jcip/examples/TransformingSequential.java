@@ -1,29 +1,36 @@
 package net.jcip.examples;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
- * TransformingSequential
- * <p/>
- * Transforming sequential execution into parallel execution
- *
- * @author Brian Goetz and Tim Peierls
- */
+ TransformingSequential
+ <p/>
+ Transforming sequential execution into parallel execution
+
+ @author Brian Goetz and Tim Peierls */
 public abstract class TransformingSequential {
 
     void processSequentially(List<Element> elements) {
-        for (Element e : elements)
+        for (Element e : elements) {
             process(e);
+        }
     }
 
     void processInParallel(Executor exec, List<Element> elements) {
-        for (final Element e : elements)
+        for (final Element e : elements) {
             exec.execute(new Runnable() {
                 public void run() {
                     process(e);
                 }
             });
+        }
     }
 
     public abstract void process(Element e);
@@ -51,7 +58,7 @@ public abstract class TransformingSequential {
     }
 
     public <T> Collection<T> getParallelResults(List<Node<T>> nodes)
-            throws InterruptedException {
+        throws InterruptedException {
         ExecutorService exec = Executors.newCachedThreadPool();
         Queue<T> resultQueue = new ConcurrentLinkedQueue<T>();
         parallelRecursive(exec, nodes, resultQueue);
@@ -61,12 +68,13 @@ public abstract class TransformingSequential {
     }
 
     interface Element {
+
     }
 
-    interface Node <T> {
+    interface Node<T> {
+
         T compute();
 
         List<Node<T>> getChildren();
     }
 }
-

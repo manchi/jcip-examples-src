@@ -1,29 +1,41 @@
 package net.jcip.examples;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
- * QuoteTask
- * <p/>
- * Requesting travel quotes under a time budget
- *
- * @author Brian Goetz and Tim Peierls
- */
+ QuoteTask
+ <p/>
+ Requesting travel quotes under a time budget
+
+ @author Brian Goetz and Tim Peierls */
 public class TimeBudget {
+
     private static ExecutorService exec = Executors.newCachedThreadPool();
 
     public List<TravelQuote> getRankedTravelQuotes(TravelInfo travelInfo, Set<TravelCompany> companies,
                                                    Comparator<TravelQuote> ranking, long time, TimeUnit unit)
-            throws InterruptedException {
+        throws InterruptedException {
         List<QuoteTask> tasks = new ArrayList<QuoteTask>();
-        for (TravelCompany company : companies)
+        for (TravelCompany company : companies) {
             tasks.add(new QuoteTask(company, travelInfo));
+        }
 
         List<Future<TravelQuote>> futures = exec.invokeAll(tasks, time, unit);
 
         List<TravelQuote> quotes =
-                new ArrayList<TravelQuote>(tasks.size());
+            new ArrayList<TravelQuote>(tasks.size());
         Iterator<QuoteTask> taskIter = tasks.iterator();
         for (Future<TravelQuote> f : futures) {
             QuoteTask task = taskIter.next();
@@ -43,6 +55,7 @@ public class TimeBudget {
 }
 
 class QuoteTask implements Callable<TravelQuote> {
+
     private final TravelCompany company;
     private final TravelInfo travelInfo;
 
@@ -65,12 +78,14 @@ class QuoteTask implements Callable<TravelQuote> {
 }
 
 interface TravelCompany {
+
     TravelQuote solicitQuote(TravelInfo travelInfo) throws Exception;
 }
 
 interface TravelQuote {
+
 }
 
 interface TravelInfo {
-}
 
+}

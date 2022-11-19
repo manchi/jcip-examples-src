@@ -1,19 +1,22 @@
 package net.jcip.examples;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Vector;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.Immutable;
 
 /**
- * ThreeStooges
- * <p/>
- * Immutable class built out of mutable underlying objects,
- * demonstration of candidate for lock elision
- *
- * @author Brian Goetz and Tim Peierls
- */
+ ThreeStooges
+ <p/>
+ Immutable class built out of mutable underlying objects,
+ demonstration of candidate for lock elision
+
+ @author Brian Goetz and Tim Peierls */
 @Immutable
- public final class ThreeStooges {
+public final class ThreeStooges {
+
     private final Set<String> stooges = new HashSet<String>();
 
     public ThreeStooges() {

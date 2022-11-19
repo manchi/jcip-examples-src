@@ -2,17 +2,19 @@ package net.jcip.examples;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * ProducerConsumer
- * <p/>
- * Producer and consumer tasks in a desktop search application
- *
- * @author Brian Goetz and Tim Peierls
- */
+ ProducerConsumer
+ <p/>
+ Producer and consumer tasks in a desktop search application
+
+ @author Brian Goetz and Tim Peierls */
 public class ProducerConsumer {
+
     static class FileCrawler implements Runnable {
+
         private final BlockingQueue<File> fileQueue;
         private final FileFilter fileFilter;
         private final File root;
@@ -44,16 +46,19 @@ public class ProducerConsumer {
         private void crawl(File root) throws InterruptedException {
             File[] entries = root.listFiles(fileFilter);
             if (entries != null) {
-                for (File entry : entries)
-                    if (entry.isDirectory())
+                for (File entry : entries) {
+                    if (entry.isDirectory()) {
                         crawl(entry);
-                    else if (!alreadyIndexed(entry))
+                    } else if (!alreadyIndexed(entry)) {
                         fileQueue.put(entry);
+                    }
+                }
             }
         }
     }
 
     static class Indexer implements Runnable {
+
         private final BlockingQueue<File> queue;
 
         public Indexer(BlockingQueue<File> queue) {
@@ -62,8 +67,9 @@ public class ProducerConsumer {
 
         public void run() {
             try {
-                while (true)
+                while (true) {
                     indexFile(queue.take());
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -71,7 +77,9 @@ public class ProducerConsumer {
 
         public void indexFile(File file) {
             // Index the file...
-        };
+        }
+
+        ;
     }
 
     private static final int BOUND = 10;
@@ -85,10 +93,12 @@ public class ProducerConsumer {
             }
         };
 
-        for (File root : roots)
+        for (File root : roots) {
             new Thread(new FileCrawler(queue, filter, root)).start();
+        }
 
-        for (int i = 0; i < N_CONSUMERS; i++)
+        for (int i = 0; i < N_CONSUMERS; i++) {
             new Thread(new Indexer(queue)).start();
+        }
     }
 }

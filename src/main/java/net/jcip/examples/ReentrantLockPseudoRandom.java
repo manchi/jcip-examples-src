@@ -1,18 +1,19 @@
 package net.jcip.examples;
 
-import java.util.concurrent.locks.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * ReentrantLockPseudoRandom
- * <p/>
- * Random number generator using ReentrantLock
- *
- * @author Brian Goetz and Tim Peierls
- */
+ ReentrantLockPseudoRandom
+ <p/>
+ Random number generator using ReentrantLock
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class ReentrantLockPseudoRandom extends PseudoRandom {
+
     private final Lock lock = new ReentrantLock(false);
     private int seed;
 

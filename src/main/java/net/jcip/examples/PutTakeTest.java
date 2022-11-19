@@ -1,18 +1,20 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import junit.framework.TestCase;
 
 /**
- * PutTakeTest
- * <p/>
- * Producer-consumer test program for BoundedBuffer
- *
- * @author Brian Goetz and Tim Peierls
- */
+ PutTakeTest
+ <p/>
+ Producer-consumer test program for BoundedBuffer
+
+ @author Brian Goetz and Tim Peierls */
 public class PutTakeTest extends TestCase {
+
     protected static final ExecutorService pool = Executors.newCachedThreadPool();
     protected CyclicBarrier barrier;
     protected final SemaphoreBoundedBuffer<Integer> bb;
@@ -54,6 +56,7 @@ public class PutTakeTest extends TestCase {
     }
 
     class Producer implements Runnable {
+
         public void run() {
             try {
                 int seed = (this.hashCode() ^ (int) System.nanoTime());
@@ -73,6 +76,7 @@ public class PutTakeTest extends TestCase {
     }
 
     class Consumer implements Runnable {
+
         public void run() {
             try {
                 barrier.await();

@@ -1,18 +1,22 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
- * ThreadDeadlock
- * <p/>
- * Task that deadlocks in a single-threaded Executor
- *
- * @author Brian Goetz and Tim Peierls
- */
+ ThreadDeadlock
+ <p/>
+ Task that deadlocks in a single-threaded Executor
+
+ @author Brian Goetz and Tim Peierls */
 public class ThreadDeadlock {
+
     ExecutorService exec = Executors.newSingleThreadExecutor();
 
     public class LoadFileTask implements Callable<String> {
+
         private final String fileName;
 
         public LoadFileTask(String fileName) {
@@ -26,6 +30,7 @@ public class ThreadDeadlock {
     }
 
     public class RenderPageTask implements Callable<String> {
+
         public String call() throws Exception {
             Future<String> header, footer;
             header = exec.submit(new LoadFileTask("header.html"));

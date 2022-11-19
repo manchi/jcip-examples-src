@@ -1,29 +1,36 @@
 package net.jcip.examples;
 
 import java.math.BigInteger;
-import javax.servlet.*;
 
-import net.jcip.annotations.*;
+import javax.servlet.GenericServlet;
+import javax.servlet.Servlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * SynchronizedFactorizer
- *
- * Servlet that caches last result, but with unnacceptably poor concurrency
- *
- * @author Brian Goetz and Tim Peierls
- */
+ SynchronizedFactorizer
+
+ Servlet that caches last result, but with unnacceptably poor concurrency
+
+ @author Brian Goetz and Tim Peierls */
 
 @ThreadSafe
 public class SynchronizedFactorizer extends GenericServlet implements Servlet {
-    @GuardedBy("this") private BigInteger lastNumber;
-    @GuardedBy("this") private BigInteger[] lastFactors;
+
+    @GuardedBy("this")
+    private BigInteger lastNumber;
+    @GuardedBy("this")
+    private BigInteger[] lastFactors;
 
     public synchronized void service(ServletRequest req,
                                      ServletResponse resp) {
         BigInteger i = extractFromRequest(req);
-        if (i.equals(lastNumber))
+        if (i.equals(lastNumber)) {
             encodeIntoResponse(resp, lastFactors);
-        else {
+        } else {
             BigInteger[] factors = factor(i);
             lastNumber = i;
             lastFactors = factors;
@@ -40,7 +47,6 @@ public class SynchronizedFactorizer extends GenericServlet implements Servlet {
 
     BigInteger[] factor(BigInteger i) {
         // Doesn't really factor
-        return new BigInteger[] { i };
+        return new BigInteger[]{i};
     }
 }
-

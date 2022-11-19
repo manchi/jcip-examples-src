@@ -2,16 +2,17 @@ package net.jcip.examples;
 
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * LogWriter
- * <p/>
- * Producer-consumer logging service with no shutdown support
- *
- * @author Brian Goetz and Tim Peierls
- */
+ LogWriter
+ <p/>
+ Producer-consumer logging service with no shutdown support
+
+ @author Brian Goetz and Tim Peierls */
 public class LogWriter {
+
     private final BlockingQueue<String> queue;
     private final LoggerThread logger;
     private static final int CAPACITY = 1000;
@@ -30,6 +31,7 @@ public class LogWriter {
     }
 
     private class LoggerThread extends Thread {
+
         private final PrintWriter writer;
 
         public LoggerThread(Writer writer) {
@@ -38,8 +40,9 @@ public class LogWriter {
 
         public void run() {
             try {
-                while (true)
+                while (true) {
                     writer.println(queue.take());
+                }
             } catch (InterruptedException ignored) {
             } finally {
                 writer.close();

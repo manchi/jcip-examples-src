@@ -1,19 +1,19 @@
 package net.jcip.examples;
 
 import java.math.BigInteger;
-import java.util.*;
+import java.util.Arrays;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.Immutable;
 
 /**
- * OneValueCache
- * <p/>
- * Immutable holder for caching a number and its factors
- *
- * @author Brian Goetz and Tim Peierls
- */
+ OneValueCache
+ <p/>
+ Immutable holder for caching a number and its factors
+
+ @author Brian Goetz and Tim Peierls */
 @Immutable
 public class OneValueCache {
+
     private final BigInteger lastNumber;
     private final BigInteger[] lastFactors;
 
@@ -24,9 +24,10 @@ public class OneValueCache {
     }
 
     public BigInteger[] getFactors(BigInteger i) {
-        if (lastNumber == null || !lastNumber.equals(i))
+        if (lastNumber == null || !lastNumber.equals(i)) {
             return null;
-        else
+        } else {
             return Arrays.copyOf(lastFactors, lastFactors.length);
+        }
     }
 }

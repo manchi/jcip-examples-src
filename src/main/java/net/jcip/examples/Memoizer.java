@@ -1,17 +1,23 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 /**
- * Memoizer
- * <p/>
- * Final implementation of Memoizer
- *
- * @author Brian Goetz and Tim Peierls
- */
-public class Memoizer <A, V> implements Computable<A, V> {
+ Memoizer
+ <p/>
+ Final implementation of Memoizer
+
+ @author Brian Goetz and Tim Peierls */
+public class Memoizer<A, V> implements Computable<A, V> {
+
     private final ConcurrentMap<A, Future<V>> cache
-            = new ConcurrentHashMap<A, Future<V>>();
+        = new ConcurrentHashMap<A, Future<V>>();
     private final Computable<A, V> c;
 
     public Memoizer(Computable<A, V> c) {

@@ -1,13 +1,13 @@
 package net.jcip.examples;
 
 /**
- * LeftRightDeadlock
- *
- * Simple lock-ordering deadlock
- *
- * @author Brian Goetz and Tim Peierls
- */
+ LeftRightDeadlock
+
+ Simple lock-ordering deadlock
+
+ @author Brian Goetz and Tim Peierls */
 public class LeftRightDeadlock {
+
     private final Object left = new Object();
     private final Object right = new Object();
 

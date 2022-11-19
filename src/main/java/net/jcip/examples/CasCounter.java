@@ -1,16 +1,16 @@
 package net.jcip.examples;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * CasCounter
- * <p/>
- * Nonblocking counter using CAS
- *
- * @author Brian Goetz and Tim Peierls
- */
+ CasCounter
+ <p/>
+ Nonblocking counter using CAS
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class CasCounter {
+
     private SimulatedCAS value;
 
     public int getValue() {

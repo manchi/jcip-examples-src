@@ -1,27 +1,31 @@
 package net.jcip.examples;
 
 import java.math.BigInteger;
-import javax.servlet.*;
 
-import net.jcip.annotations.*;
+import javax.servlet.GenericServlet;
+import javax.servlet.Servlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * Factorizer
- * <p/>
- * Factorizing servlet that caches results using Memoizer
- *
- * @author Brian Goetz and Tim Peierls
- */
+ Factorizer
+ <p/>
+ Factorizing servlet that caches results using Memoizer
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class Factorizer extends GenericServlet implements Servlet {
+
     private final Computable<BigInteger, BigInteger[]> c =
-            new Computable<BigInteger, BigInteger[]>() {
-                public BigInteger[] compute(BigInteger arg) {
-                    return factor(arg);
-                }
-            };
+        new Computable<BigInteger, BigInteger[]>() {
+            public BigInteger[] compute(BigInteger arg) {
+                return factor(arg);
+            }
+        };
     private final Computable<BigInteger, BigInteger[]> cache
-            = new Memoizer<BigInteger, BigInteger[]>(c);
+        = new Memoizer<BigInteger, BigInteger[]>(c);
 
     public void service(ServletRequest req,
                         ServletResponse resp) {

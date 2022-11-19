@@ -2,16 +2,17 @@ package net.jcip.examples;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * IndexingService
- * <p/>
- * Shutdown with poison pill
- *
- * @author Brian Goetz and Tim Peierls
- */
+ IndexingService
+ <p/>
+ Shutdown with poison pill
+
+ @author Brian Goetz and Tim Peierls */
 public class IndexingService {
+
     private static final int CAPACITY = 1000;
     private static final File POISON = new File("");
     private final IndexerThread consumer = new IndexerThread();
@@ -35,6 +36,7 @@ public class IndexingService {
     }
 
     class CrawlerThread extends Thread {
+
         public void run() {
             try {
                 crawl(root);
@@ -54,24 +56,27 @@ public class IndexingService {
             File[] entries = root.listFiles(fileFilter);
             if (entries != null) {
                 for (File entry : entries) {
-                    if (entry.isDirectory())
+                    if (entry.isDirectory()) {
                         crawl(entry);
-                    else if (!alreadyIndexed(entry))
+                    } else if (!alreadyIndexed(entry)) {
                         queue.put(entry);
+                    }
                 }
             }
         }
     }
 
     class IndexerThread extends Thread {
+
         public void run() {
             try {
                 while (true) {
                     File file = queue.take();
-                    if (file == POISON)
+                    if (file == POISON) {
                         break;
-                    else
+                    } else {
                         indexFile(file);
+                    }
                 }
             } catch (InterruptedException consumed) {
             }
@@ -79,7 +84,9 @@ public class IndexingService {
 
         public void indexFile(File file) {
             /*...*/
-        };
+        }
+
+        ;
     }
 
     public void start() {

@@ -1,16 +1,16 @@
 package net.jcip.examples;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
- * MutablePoint
- * <p/>
- * Mutable Point class similar to java.awt.Point
- *
- * @author Brian Goetz and Tim Peierls
- */
+ MutablePoint
+ <p/>
+ Mutable Point class similar to java.awt.Point
+
+ @author Brian Goetz and Tim Peierls */
 @NotThreadSafe
 public class MutablePoint {
+
     public int x, y;
 
     public MutablePoint() {

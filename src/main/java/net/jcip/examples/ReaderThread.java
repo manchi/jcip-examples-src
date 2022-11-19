@@ -5,13 +5,13 @@ import java.io.InputStream;
 import java.net.Socket;
 
 /**
- * ReaderThread
- * <p/>
- * Encapsulating nonstandard cancellation in a Thread by overriding interrupt
- *
- * @author Brian Goetz and Tim Peierls
- */
+ ReaderThread
+ <p/>
+ Encapsulating nonstandard cancellation in a Thread by overriding interrupt
+
+ @author Brian Goetz and Tim Peierls */
 public class ReaderThread extends Thread {
+
     private static final int BUFSZ = 512;
     private final Socket socket;
     private final InputStream in;
@@ -35,10 +35,11 @@ public class ReaderThread extends Thread {
             byte[] buf = new byte[BUFSZ];
             while (true) {
                 int count = in.read(buf);
-                if (count < 0)
+                if (count < 0) {
                     break;
-                else if (count > 0)
+                } else if (count > 0) {
                     processBuffer(buf, count);
+                }
             }
         } catch (IOException e) { /* Allow thread to exit */
         }

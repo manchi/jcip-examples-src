@@ -2,23 +2,26 @@ package net.jcip.examples;
 
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.GuardedBy;
 
 /**
- * LogService
- * <p/>
- * Adding reliable cancellation to LogWriter
- *
- * @author Brian Goetz and Tim Peierls
- */
+ LogService
+ <p/>
+ Adding reliable cancellation to LogWriter
+
+ @author Brian Goetz and Tim Peierls */
 public class LogService {
+
     private final BlockingQueue<String> queue;
     private final LoggerThread loggerThread;
     private final PrintWriter writer;
-    @GuardedBy("this") private boolean isShutdown;
-    @GuardedBy("this") private int reservations;
+    @GuardedBy("this")
+    private boolean isShutdown;
+    @GuardedBy("this")
+    private int reservations;
 
     public LogService(Writer writer) {
         this.queue = new LinkedBlockingQueue<String>();
@@ -39,21 +42,24 @@ public class LogService {
 
     public void log(String msg) throws InterruptedException {
         synchronized (this) {
-            if (isShutdown)
+            if (isShutdown) {
                 throw new IllegalStateException(/*...*/);
+            }
             ++reservations;
         }
         queue.put(msg);
     }
 
     private class LoggerThread extends Thread {
+
         public void run() {
             try {
                 while (true) {
                     try {
                         synchronized (LogService.this) {
-                            if (isShutdown && reservations == 0)
+                            if (isShutdown && reservations == 0) {
                                 break;
+                            }
                         }
                         String msg = queue.take();
                         synchronized (LogService.this) {
@@ -69,4 +75,3 @@ public class LogService {
         }
     }
 }
-

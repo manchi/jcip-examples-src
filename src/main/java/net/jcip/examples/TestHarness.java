@@ -1,17 +1,17 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
+import java.util.concurrent.CountDownLatch;
 
 /**
- * TestHarness
- * <p/>
- * Using CountDownLatch for starting and stopping threads in timing tests
- *
- * @author Brian Goetz and Tim Peierls
- */
+ TestHarness
+ <p/>
+ Using CountDownLatch for starting and stopping threads in timing tests
+
+ @author Brian Goetz and Tim Peierls */
 public class TestHarness {
+
     public long timeTasks(int nThreads, final Runnable task)
-            throws InterruptedException {
+        throws InterruptedException {
         final CountDownLatch startGate = new CountDownLatch(1);
         final CountDownLatch endGate = new CountDownLatch(nThreads);
 

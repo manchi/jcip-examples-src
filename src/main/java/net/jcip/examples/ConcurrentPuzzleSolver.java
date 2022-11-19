@@ -1,16 +1,20 @@
 package net.jcip.examples;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * ConcurrentPuzzleSolver
- * <p/>
- * Concurrent version of puzzle solver
- *
- * @author Brian Goetz and Tim Peierls
- */
-public class ConcurrentPuzzleSolver <P, M> {
+ ConcurrentPuzzleSolver
+ <p/>
+ Concurrent version of puzzle solver
+
+ @author Brian Goetz and Tim Peierls */
+public class ConcurrentPuzzleSolver<P, M> {
+
     private final Puzzle<P, M> puzzle;
     private final ExecutorService exec;
     private final ConcurrentMap<P, Boolean> seen;
@@ -47,19 +51,23 @@ public class ConcurrentPuzzleSolver <P, M> {
     }
 
     protected class SolverTask extends PuzzleNode<P, M> implements Runnable {
+
         SolverTask(P pos, M move, PuzzleNode<P, M> prev) {
             super(pos, move, prev);
         }
 
         public void run() {
             if (solution.isSet()
-                    || seen.putIfAbsent(pos, true) != null)
+                || seen.putIfAbsent(pos, true) != null) {
                 return; // already solved or seen this position
-            if (puzzle.isGoal(pos))
+            }
+            if (puzzle.isGoal(pos)) {
                 solution.setValue(this);
-            else
-                for (M m : puzzle.legalMoves(pos))
+            } else {
+                for (M m : puzzle.legalMoves(pos)) {
                     exec.execute(newTask(puzzle.move(pos, m), m, this));
+                }
+            }
         }
     }
 }

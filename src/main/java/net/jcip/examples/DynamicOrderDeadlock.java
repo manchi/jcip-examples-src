@@ -1,25 +1,25 @@
 package net.jcip.examples;
 
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * DynamicOrderDeadlock
- * <p/>
- * Dynamic lock-ordering deadlock
- *
- * @author Brian Goetz and Tim Peierls
- */
+ DynamicOrderDeadlock
+ <p/>
+ Dynamic lock-ordering deadlock
+
+ @author Brian Goetz and Tim Peierls */
 public class DynamicOrderDeadlock {
+
     // Warning: deadlock-prone!
     public static void transferMoney(Account fromAccount,
                                      Account toAccount,
                                      DollarAmount amount)
-            throws InsufficientFundsException {
+        throws InsufficientFundsException {
         synchronized (fromAccount) {
             synchronized (toAccount) {
-                if (fromAccount.getBalance().compareTo(amount) < 0)
+                if (fromAccount.getBalance().compareTo(amount) < 0) {
                     throw new InsufficientFundsException();
-                else {
+                } else {
                     fromAccount.debit(amount);
                     toAccount.credit(amount);
                 }
@@ -47,6 +47,7 @@ public class DynamicOrderDeadlock {
     }
 
     static class Account {
+
         private DollarAmount balance;
         private final int acctNo;
         private static final AtomicInteger sequence = new AtomicInteger();
@@ -73,5 +74,6 @@ public class DynamicOrderDeadlock {
     }
 
     static class InsufficientFundsException extends Exception {
+
     }
 }

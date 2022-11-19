@@ -1,19 +1,21 @@
 package net.jcip.examples;
 
 import java.math.BigInteger;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.GuardedBy;
 
 /**
- * Memoizer1
- *
- * Initial cache attempt using HashMap and synchronization
- *
- * @author Brian Goetz and Tim Peierls
- */
-public class Memoizer1 <A, V> implements Computable<A, V> {
-    @GuardedBy("this") private final Map<A, V> cache = new HashMap<A, V>();
+ Memoizer1
+
+ Initial cache attempt using HashMap and synchronization
+
+ @author Brian Goetz and Tim Peierls */
+public class Memoizer1<A, V> implements Computable<A, V> {
+
+    @GuardedBy("this")
+    private final Map<A, V> cache = new HashMap<A, V>();
     private final Computable<A, V> c;
 
     public Memoizer1(Computable<A, V> c) {
@@ -31,12 +33,14 @@ public class Memoizer1 <A, V> implements Computable<A, V> {
 }
 
 
-interface Computable <A, V> {
+interface Computable<A, V> {
+
     V compute(A arg) throws InterruptedException;
 }
 
 class ExpensiveFunction
-        implements Computable<String, BigInteger> {
+    implements Computable<String, BigInteger> {
+
     public BigInteger compute(String arg) {
         // after deep thought...
         return new BigInteger(arg);

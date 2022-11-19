@@ -1,18 +1,18 @@
 package net.jcip.examples;
 
-import java.util.concurrent.locks.*;
+import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * OneShotLatch
- * <p/>
- * Binary latch using AbstractQueuedSynchronizer
- *
- * @author Brian Goetz and Tim Peierls
- */
+ OneShotLatch
+ <p/>
+ Binary latch using AbstractQueuedSynchronizer
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class OneShotLatch {
+
     private final Sync sync = new Sync();
 
     public void signal() {
@@ -24,6 +24,7 @@ public class OneShotLatch {
     }
 
     private class Sync extends AbstractQueuedSynchronizer {
+
         protected int tryAcquireShared(int ignored) {
             // Succeed if latch is open (state == 1), else fail
             return (getState() == 1) ? 1 : -1;

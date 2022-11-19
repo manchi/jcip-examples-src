@@ -1,20 +1,20 @@
 package net.jcip.examples;
 
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.atomic.AtomicReference;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * LinkedQueue
- * <p/>
- * Insertion in the Michael-Scott nonblocking queue algorithm
- *
- * @author Brian Goetz and Tim Peierls
- */
-@ThreadSafe
-public class LinkedQueue <E> {
+ LinkedQueue
+ <p/>
+ Insertion in the Michael-Scott nonblocking queue algorithm
 
-    private static class Node <E> {
+ @author Brian Goetz and Tim Peierls */
+@ThreadSafe
+public class LinkedQueue<E> {
+
+    private static class Node<E> {
+
         final E item;
         final AtomicReference<LinkedQueue.Node<E>> next;
 
@@ -26,9 +26,9 @@ public class LinkedQueue <E> {
 
     private final LinkedQueue.Node<E> dummy = new LinkedQueue.Node<E>(null, null);
     private final AtomicReference<LinkedQueue.Node<E>> head
-            = new AtomicReference<LinkedQueue.Node<E>>(dummy);
+        = new AtomicReference<LinkedQueue.Node<E>>(dummy);
     private final AtomicReference<LinkedQueue.Node<E>> tail
-            = new AtomicReference<LinkedQueue.Node<E>>(dummy);
+        = new AtomicReference<LinkedQueue.Node<E>>(dummy);
 
     public boolean put(E item) {
         LinkedQueue.Node<E> newNode = new LinkedQueue.Node<E>(item, null);

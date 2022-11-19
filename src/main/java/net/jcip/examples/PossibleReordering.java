@@ -1,13 +1,13 @@
 package net.jcip.examples;
 
 /**
- * PossibleReordering
- * <p/>
- * Insufficiently synchronized program that can have surprising results
- *
- * @author Brian Goetz and Tim Peierls
- */
+ PossibleReordering
+ <p/>
+ Insufficiently synchronized program that can have surprising results
+
+ @author Brian Goetz and Tim Peierls */
 public class PossibleReordering {
+
     static int x = 0, y = 0;
     static int a = 0, b = 0;
 

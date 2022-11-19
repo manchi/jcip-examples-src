@@ -1,17 +1,18 @@
 package net.jcip.examples;
 
-import java.util.concurrent.locks.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * InterruptibleLocking
- *
- * @author Brian Goetz and Tim Peierls
- */
+ InterruptibleLocking
+
+ @author Brian Goetz and Tim Peierls */
 public class InterruptibleLocking {
+
     private Lock lock = new ReentrantLock();
 
     public boolean sendOnSharedLine(String message)
-            throws InterruptedException {
+        throws InterruptedException {
         lock.lockInterruptibly();
         try {
             return cancellableSendOnSharedLine(message);

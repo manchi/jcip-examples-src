@@ -1,17 +1,20 @@
 package net.jcip.examples;
 
 import java.math.BigInteger;
-import javax.servlet.*;
 
-import net.jcip.annotations.*;
+import javax.servlet.GenericServlet;
+import javax.servlet.Servlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * StatelessFactorizer
- *
- * A stateless servlet
- * 
- * @author Brian Goetz and Tim Peierls
- */
+ StatelessFactorizer
+
+ A stateless servlet
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class StatelessFactorizer extends GenericServlet implements Servlet {
 
@@ -30,6 +33,6 @@ public class StatelessFactorizer extends GenericServlet implements Servlet {
 
     BigInteger[] factor(BigInteger i) {
         // Doesn't really factor
-        return new BigInteger[] { i };
+        return new BigInteger[]{i};
     }
 }

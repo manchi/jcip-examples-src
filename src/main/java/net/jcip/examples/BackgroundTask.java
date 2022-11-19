@@ -1,19 +1,26 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
- * BackgroundTask
- * <p/>
- * Background task class supporting cancellation, completion notification, and progress notification
- *
- * @author Brian Goetz and Tim Peierls
- */
+ BackgroundTask
+ <p/>
+ Background task class supporting cancellation, completion notification, and progress notification
 
-public abstract class BackgroundTask <V> implements Runnable, Future<V> {
+ @author Brian Goetz and Tim Peierls */
+
+public abstract class BackgroundTask<V> implements Runnable, Future<V> {
+
     private final FutureTask<V> computation = new Computation();
 
     private class Computation extends FutureTask<V> {
+
         public Computation() {
             super(new Callable<V>() {
                 public V call() throws Exception {
@@ -38,7 +45,9 @@ public abstract class BackgroundTask <V> implements Runnable, Future<V> {
                     } finally {
                         onCompletion(value, thrown, cancelled);
                     }
-                };
+                }
+
+                ;
             });
         }
     }
@@ -72,9 +81,9 @@ public abstract class BackgroundTask <V> implements Runnable, Future<V> {
     }
 
     public V get(long timeout, TimeUnit unit)
-            throws InterruptedException,
-            ExecutionException,
-            TimeoutException {
+        throws InterruptedException,
+               ExecutionException,
+               TimeoutException {
         return computation.get(timeout, unit);
     }
 

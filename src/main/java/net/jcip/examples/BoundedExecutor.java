@@ -1,18 +1,20 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.Semaphore;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.ThreadSafe;
 
 /**
- * BoundedExecutor
- * <p/>
- * Using a Semaphore to throttle task submission
- *
- * @author Brian Goetz and Tim Peierls
- */
+ BoundedExecutor
+ <p/>
+ Using a Semaphore to throttle task submission
+
+ @author Brian Goetz and Tim Peierls */
 @ThreadSafe
 public class BoundedExecutor {
+
     private final Executor exec;
     private final Semaphore semaphore;
 
@@ -22,7 +24,7 @@ public class BoundedExecutor {
     }
 
     public void submitTask(final Runnable command)
-            throws InterruptedException {
+        throws InterruptedException {
         semaphore.acquire();
         try {
             exec.execute(new Runnable() {

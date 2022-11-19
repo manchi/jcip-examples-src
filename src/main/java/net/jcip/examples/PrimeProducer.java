@@ -1,16 +1,16 @@
 package net.jcip.examples;
 
 import java.math.BigInteger;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
 
 /**
- * PrimeProducer
- * <p/>
- * Using interruption for cancellation
- *
- * @author Brian Goetz and Tim Peierls
- */
+ PrimeProducer
+ <p/>
+ Using interruption for cancellation
+
+ @author Brian Goetz and Tim Peierls */
 public class PrimeProducer extends Thread {
+
     private final BlockingQueue<BigInteger> queue;
 
     PrimeProducer(BlockingQueue<BigInteger> queue) {
@@ -20,8 +20,9 @@ public class PrimeProducer extends Thread {
     public void run() {
         try {
             BigInteger p = BigInteger.ONE;
-            while (!Thread.currentThread().isInterrupted())
+            while (!Thread.currentThread().isInterrupted()) {
                 queue.put(p = p.nextProbablePrime());
+            }
         } catch (InterruptedException consumed) {
             /* Allow thread to exit */
         }

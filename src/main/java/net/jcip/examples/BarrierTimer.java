@@ -1,13 +1,13 @@
 package net.jcip.examples;
 
 /**
- * BarrierTimer
- * <p/>
- * Barrier-based timer
- *
- * @author Brian Goetz and Tim Peierls
- */
+ BarrierTimer
+ <p/>
+ Barrier-based timer
+
+ @author Brian Goetz and Tim Peierls */
 public class BarrierTimer implements Runnable {
+
     private boolean started;
     private long startTime, endTime;
 
@@ -16,8 +16,9 @@ public class BarrierTimer implements Runnable {
         if (!started) {
             started = true;
             startTime = t;
-        } else
+        } else {
             endTime = t;
+        }
     }
 
     public synchronized void clear() {

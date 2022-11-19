@@ -1,16 +1,17 @@
 package net.jcip.examples;
 
-import java.util.concurrent.atomic.*;
-import java.util.logging.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * MyAppThread
- * <p/>
- * Custom thread base class
- *
- * @author Brian Goetz and Tim Peierls
- */
+ MyAppThread
+ <p/>
+ Custom thread base class
+
+ @author Brian Goetz and Tim Peierls */
 public class MyAppThread extends Thread {
+
     public static final String DEFAULT_NAME = "MyAppThread";
     private static volatile boolean debugLifecycle = false;
     private static final AtomicInteger created = new AtomicInteger();
@@ -35,13 +36,17 @@ public class MyAppThread extends Thread {
     public void run() {
         // Copy debug flag to ensure consistent value throughout.
         boolean debug = debugLifecycle;
-        if (debug) log.log(Level.FINE, "Created " + getName());
+        if (debug) {
+            log.log(Level.FINE, "Created " + getName());
+        }
         try {
             alive.incrementAndGet();
             super.run();
         } finally {
             alive.decrementAndGet();
-            if (debug) log.log(Level.FINE, "Exiting " + getName());
+            if (debug) {
+                log.log(Level.FINE, "Exiting " + getName());
+            }
         }
     }
 

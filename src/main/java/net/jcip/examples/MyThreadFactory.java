@@ -1,15 +1,15 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ThreadFactory;
 
 /**
- * MyThreadFactory
- * <p/>
- * Custom thread factory
- *
- * @author Brian Goetz and Tim Peierls
- */
+ MyThreadFactory
+ <p/>
+ Custom thread factory
+
+ @author Brian Goetz and Tim Peierls */
 public class MyThreadFactory implements ThreadFactory {
+
     private final String poolName;
 
     public MyThreadFactory(String poolName) {

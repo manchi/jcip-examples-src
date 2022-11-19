@@ -1,26 +1,28 @@
 package net.jcip.examples;
 
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import junit.framework.TestCase;
 
 /**
- * TestingThreadFactory
- * <p/>
- * Testing thread pool expansion
- *
- * @author Brian Goetz and Tim Peierls
- */
+ TestingThreadFactory
+ <p/>
+ Testing thread pool expansion
+
+ @author Brian Goetz and Tim Peierls */
 public class TestThreadPool extends TestCase {
 
     private final TestingThreadFactory threadFactory = new TestingThreadFactory();
 
+    //    @Test
     public void testPoolExpansion() throws InterruptedException {
         int MAX_SIZE = 10;
         ExecutorService exec = Executors.newFixedThreadPool(MAX_SIZE);
 
-        for (int i = 0; i < 10 * MAX_SIZE; i++)
+        for (int i = 0; i < 10 * MAX_SIZE; i++) {
             exec.execute(new Runnable() {
                 public void run() {
                     try {
@@ -30,16 +32,19 @@ public class TestThreadPool extends TestCase {
                     }
                 }
             });
+        }
         for (int i = 0;
              i < 20 && threadFactory.numCreated.get() < MAX_SIZE;
-             i++)
+             i++) {
             Thread.sleep(100);
+        }
         assertEquals(threadFactory.numCreated.get(), MAX_SIZE);
         exec.shutdownNow();
     }
 }
 
 class TestingThreadFactory implements ThreadFactory {
+
     public final AtomicInteger numCreated = new AtomicInteger();
     private final ThreadFactory factory = Executors.defaultThreadFactory();
 
