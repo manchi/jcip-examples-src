@@ -22,13 +22,18 @@ ext {
 
 dependencies {
 
-    implementation 'ch.qos.logback:logback-classic:1.2.11'
-    compileOnly 'org.projectlombok:lombok'
+    implementation 'ch.qos.logback:logback-classic:1.4.4'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'junit:junit:4.13.1'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
-    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+//    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    testImplementation 'junit:junit:4.13.2'
 }
-
-
 
 tasks.named('test') {
     useJUnitPlatform()
