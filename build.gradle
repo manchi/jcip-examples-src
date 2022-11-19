@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+}
+
+group = 'net.jcip'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '16'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+
+}
+
+dependencies {
+
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
+    compileOnly 'org.projectlombok:lombok'
+
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
