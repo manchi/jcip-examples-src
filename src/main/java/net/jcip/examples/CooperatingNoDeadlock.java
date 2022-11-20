@@ -5,6 +5,7 @@ import java.util.Set;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
+import net.jcip.examples.ch04.Point;
 
 /**
  CooperatingNoDeadlock

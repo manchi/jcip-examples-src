@@ -1,10 +1,11 @@
-package net.jcip.examples;
+package net.jcip.examples.ch04;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.jcip.annotations.ThreadSafe;
+import net.jcip.examples.ch04.SafePoint;
 
 /**
  PublishingVehicleTracker

@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch04;
 
 import net.jcip.annotations.GuardedBy;
 

@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch03;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;

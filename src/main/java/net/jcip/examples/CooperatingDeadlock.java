@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.jcip.annotations.GuardedBy;
+import net.jcip.examples.ch04.Point;
 
 /**
  CooperatingDeadlock

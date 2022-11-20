@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch04;
 
 import java.util.Collections;
 import java.util.HashMap;

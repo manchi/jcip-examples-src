@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch03;
 
 import java.util.Collection;
 import java.util.Comparator;

@@ -1,9 +1,12 @@
-package net.jcip.examples;
+package net.jcip.examples.ch03;
 
 /**
  ThisEscape
  <p/>
- Implicitly allowing the this reference to escape
+ Implicitly allowing the `this` reference to escape.
+
+ When ThisEscape publishes the EventListener, it implicitly publishes the enclosing ThisEscape instance as well, because
+ inner class instances contain a hidden reference to the enclosing instance.
 
  @author Brian Goetz and Tim Peierls */
 public class ThisEscape {

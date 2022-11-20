@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch03;
 
 import java.math.BigInteger;
 
@@ -8,6 +8,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import net.jcip.annotations.ThreadSafe;
+import net.jcip.examples.ch03.OneValueCache;
 
 /**
  VolatileCachedFactorizer
